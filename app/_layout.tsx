@@ -3,13 +3,13 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import "../global.css";
 
-export default function RootLayout() {
+function RootLayout() {
   const [fontsLoaded, error] = useFonts({
-    "Quicksand-Light": require("../assets/fonts/Quicksand-Light.ttf"),
-    "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
-    "Quicksand-Medium": require("../assets/fonts/Quicksand-Medium.ttf"),
-    "Quicksand-SemiBold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
-    "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
+    "Quicksand-Light": require("@/assets/fonts/Quicksand-Light.ttf"),
+    "Quicksand-Regular": require("@/assets/fonts/Quicksand-Regular.ttf"),
+    "Quicksand-Medium": require("@/assets/fonts/Quicksand-Medium.ttf"),
+    "Quicksand-SemiBold": require("@/assets/fonts/Quicksand-SemiBold.ttf"),
+    "Quicksand-Bold": require("@/assets/fonts/Quicksand-Bold.ttf"),
   });
 
   useEffect(() => {
@@ -19,3 +19,5 @@ export default function RootLayout() {
 
   return <Stack screenOptions={{ headerShown: false }} />;
 }
+
+export default RootLayout;
