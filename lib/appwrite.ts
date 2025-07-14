@@ -1,4 +1,4 @@
-import { CreateUserParams, SignInParams } from "@/type";
+import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
 import {
   Account,
   Avatars,
@@ -13,8 +13,15 @@ export const appwriteConfig = {
   endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
   platform: process.env.EXPO_PUBLIC_APPWRITE_PLATFORM!,
   projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
+  bucketId: process.env.EXPO_PUBLIC_APPWRITE_BUCKET_ID!,
   databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!,
   userCollectionId: process.env.EXPO_PUBLIC_USER_COLLECTION_ID!,
+  categoriesCollectionId: process.env.EXPO_PUBLIC_CATEGORIES_COLLECTION_ID!,
+  menuCollectionId: process.env.EXPO_PUBLIC_MENU_COLLECTION_ID!,
+  customizationsCollectionId:
+    process.env.EXPO_PUBLIC_CUSTOMIZATIONS_COLLECTION_ID!,
+  menuCustomizationCollectionId:
+    process.env.EXPO_PUBLIC_MENU_CUSTOMIZATION_COLLECTION_ID!,
 };
 
 export const client = new Client();
@@ -70,6 +77,38 @@ export async function getCurrentUser() {
     );
 
     return currentUser.documents[0];
+  } catch (e) {
+    throw new Error(e as string);
+  }
+}
+
+export async function getMenu({ category, query }: GetMenuParams) {
+  try {
+    const queries: string[] = [];
+
+    if (category) queries.push(Query.equal("categories", category));
+    if (query) queries.push(Query.search("name", query));
+
+    const menus = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.menuCollectionId,
+      queries,
+    );
+
+    return menus.documents;
+  } catch (e) {
+    throw new Error(e as string);
+  }
+}
+
+export async function getCategories() {
+  try {
+    const categories = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.categoriesCollectionId,
+    );
+
+    return categories.documents;
   } catch (e) {
     throw new Error(e as string);
   }
