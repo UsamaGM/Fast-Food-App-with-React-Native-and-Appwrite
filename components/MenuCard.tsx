@@ -1,6 +1,7 @@
 import { appwriteConfig } from "@/lib/appwrite";
 import { useCartStore } from "@/store/cart.store";
 import { MenuItem } from "@/type";
+import { router } from "expo-router";
 import { Text, TouchableOpacity, Platform, Image } from "react-native";
 
 function MenuCard({
@@ -19,6 +20,7 @@ function MenuCard({
           ? { elevation: 10, shadowColor: "#878787" }
           : {}
       }
+      onPress={() => router.push(`/details/${$id}`)}
     >
       <Image
         source={{ uri: imageUrl }}

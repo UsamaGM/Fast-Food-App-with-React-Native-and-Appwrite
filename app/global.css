@@ -26,7 +26,7 @@
   }
 
   .cart-item {
-    @apply flex flex-row items-end justify-between mb-4 bg-white rounded-xl p-3 shadow-md shadow-dark-100/10;
+    @apply flex flex-row items-end justify-between mb-4 bg-white rounded-xl p-3 shadow-md shadow-dark-100/10 overflow-hidden;
   }
 
   .cart-item__image {
@@ -34,14 +34,14 @@
   }
 
   .cart-item__actions {
-    @apply flex flex-row items-center justify-center size-5 bg-primary/10 rounded-md;
+    @apply flex flex-row items-center justify-center p-1 bg-primary/10 rounded-md;
   }
 
   .custom-btn {
     @apply bg-primary rounded-full p-3 w-full flex flex-row justify-center;
   }
 
-  .custom-header {
+  .custom-header__row {
     @apply w-full flex flex-row items-center justify-between mb-10;
   }
 

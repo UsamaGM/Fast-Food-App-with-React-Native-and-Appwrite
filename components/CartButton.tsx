@@ -1,4 +1,4 @@
-import { images } from "@/contants";
+import { images } from "@/constants";
 import { useCartStore } from "@/store/cart.store";
 import { router } from "expo-router";
 import { Image, Text, TouchableOpacity, View } from "react-native";

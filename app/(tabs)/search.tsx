@@ -1,4 +1,5 @@
 import CartButton from "@/components/CartButton";
+import EmptyComponent from "@/components/EmptyComponent";
 import Filter from "@/components/Filter";
 import MenuCard from "@/components/MenuCard";
 import SearchBar from "@/components/SearchBar";
@@ -25,7 +26,7 @@ function Search() {
 
   useEffect(() => {
     refetch({ category, query, limit: 6 });
-  }, [category, query, refetch]);
+  }, [category, query]);
 
   return (
     <SafeAreaView className="bg-white h-full">
@@ -57,20 +58,28 @@ function Search() {
                   Search
                 </Text>
                 <View className="flex-start flex-row gap-x-1 mt-0.5">
-                  <Text className="paragraph-semibold text-dark-100">
-                    Find you favourite food
+                  <Text className="paragraph-semibold text-gray-200">
+                    Find the Food you Love
                   </Text>
                 </View>
               </View>
-
               <CartButton />
             </View>
 
             <SearchBar />
-            <Filter categories={categories as Category[]} />
+            {data && data.length > 0 && (
+              <Filter categories={categories as Category[]} />
+            )}
           </View>
         )}
-        ListEmptyComponent={() => !loading && <Text>No results</Text>}
+        ListEmptyComponent={() =>
+          !loading && (
+            <EmptyComponent
+              title="Nothing matched your search"
+              subtitle="Try a different search term or check for typos"
+            />
+          )
+        }
       />
     </SafeAreaView>
   );

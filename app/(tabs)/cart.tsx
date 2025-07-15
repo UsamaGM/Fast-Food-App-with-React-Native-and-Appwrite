@@ -1,11 +1,13 @@
+import CartItem from "@/components/CartItem";
+import CustomButton from "@/components/CustomButton";
 import CustomHeader from "@/components/CustomHeader";
+import CustomOutlinedButton from "@/components/CustomOutlinedButton";
+import EmptyComponent from "@/components/EmptyComponent";
 import { useCartStore } from "@/store/cart.store";
 import { PaymentInfoStripeProps } from "@/type";
+import cn from "clsx";
 import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import cn from "clsx";
-import CustomButton from "@/components/CustomButton";
-import CartItem from "@/components/CartItem";
 
 function PaymentInfoStripe({
   label,
@@ -38,8 +40,33 @@ function Cart() {
         renderItem={({ item }) => <CartItem item={item} />}
         keyExtractor={(item) => item.id}
         contentContainerClassName="pb-28 px-5 pt-5"
-        ListHeaderComponent={() => <CustomHeader title="Your Cart" />}
-        ListEmptyComponent={() => <Text>Cart Empty</Text>}
+        ListHeaderComponent={() => (
+          <CustomHeader
+            title="Your Cart"
+            secondRow={
+              <View className="custom-header__row">
+                <View>
+                  <Text className="paragraph-bold text-primary">
+                    DELIVERY LOCATION
+                  </Text>
+                  <Text className="h3-bold">Home</Text>
+                </View>
+
+                <CustomOutlinedButton
+                  title="Change Location"
+                  style="border-primary"
+                  textStyle="text-primary"
+                />
+              </View>
+            }
+          />
+        )}
+        ListEmptyComponent={() => (
+          <EmptyComponent
+            title="Nothing to show here"
+            subtitle="Add some delicious items to the cart and they show up here"
+          />
+        )}
         ListFooterComponent={() =>
           totalItems > 0 && (
             <View className="gap-5">

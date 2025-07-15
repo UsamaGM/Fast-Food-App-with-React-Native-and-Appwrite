@@ -1,4 +1,9 @@
-import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
+import {
+  CreateUserParams,
+  GetMenuParams,
+  MenuItem,
+  SignInParams,
+} from "@/type";
 import {
   Account,
   Avatars,
@@ -101,6 +106,20 @@ export async function getMenu({ category, query }: GetMenuParams) {
   }
 }
 
+export async function getMenuItem({ id }: { id: string }) {
+  try {
+    const doc = await databases.getDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.menuCollectionId,
+      id,
+    );
+
+    return doc as MenuItem;
+  } catch (e) {
+    throw new Error(e as string);
+  }
+}
+
 export async function getCategories() {
   try {
     const categories = await databases.listDocuments(
@@ -113,3 +132,45 @@ export async function getCategories() {
     throw new Error(e as string);
   }
 }
+
+export async function getCustomizations() {
+  try {
+    const customizations = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.customizationsCollectionId,
+      [Query.limit(6)],
+    );
+
+    return customizations.documents;
+  } catch (e) {
+    throw new Error(e as string);
+  }
+}
+
+export async function getMenuCustomizations({ id }: { id: string }) {
+  try {
+    const menuCustomizations = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.menuCustomizationCollectionId,
+      [Query.equal("menu", id)],
+    );
+
+    return menuCustomizations.documents[0];
+  } catch (e) {
+    throw new Error(e as string);
+  }
+}
+
+// export async function getCustomization(id: string) {
+//   try {
+//     const customization = await databases.getDocument(
+//       appwriteConfig.databaseId,
+//       appwriteConfig.customizationsCollectionId,
+//       id,
+//     );
+
+//     return customization as Customization;
+//   } catch (e) {
+//     throw new Error(e as string);
+//   }
+// }

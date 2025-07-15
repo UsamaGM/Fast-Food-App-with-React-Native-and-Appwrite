@@ -25,7 +25,7 @@ Sentry.init({
 });
 
 function RootLayout() {
-  const { isLoading, fetchAuthenticatedUser } = useAuthStore();
+  const { isLoading: authLoading, fetchAuthenticatedUser } = useAuthStore();
 
   const [fontsLoaded, error] = useFonts({
     "Quicksand-Light": require("@/assets/fonts/Quicksand-Light.ttf"),
@@ -44,7 +44,7 @@ function RootLayout() {
     fetchAuthenticatedUser();
   }, [fetchAuthenticatedUser]);
 
-  if (!fontsLoaded || isLoading) return null;
+  if (!fontsLoaded || authLoading) return null;
 
   return <Stack screenOptions={{ headerShown: false }} />;
 }

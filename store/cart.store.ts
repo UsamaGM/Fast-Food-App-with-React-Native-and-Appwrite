@@ -16,7 +16,7 @@ function areCustomizationsEqual(
 export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
 
-  addItem: (item: Omit<CartItemType, "quantity">) => {
+  addItem: (item: CartItemType & { quantity?: number }) => {
     const customizations = item.customizations ?? [];
 
     const existing = get().items.find(
@@ -33,13 +33,16 @@ export const useCartStore = create<CartStore>((set, get) => ({
             i.customizations ?? [],
             item.customizations ?? [],
           )
-            ? { ...i, quantity: i.quantity + 1 }
+            ? { ...i, quantity: i.quantity + (item.quantity ?? 1) }
             : i,
         ),
       });
     } else {
       set({
-        items: [...get().items, { ...item, quantity: 1, customizations }],
+        items: [
+          ...get().items,
+          { ...item, quantity: item.quantity ?? 1, customizations },
+        ],
       });
     }
   },
@@ -67,13 +70,20 @@ export const useCartStore = create<CartStore>((set, get) => ({
   },
 
   decreaseQty: (id, customizations = []) => {
-    set({
-      items: get().items.map((i) =>
-        i.id === id && areCustomizationsEqual(i.customizations, customizations)
-          ? { ...i, quantity: i.quantity - 1 }
-          : i,
-      ),
-    });
+    const item = get().items.find(
+      (i) =>
+        i.id === id && areCustomizationsEqual(i.customizations, customizations),
+    );
+
+    if (item && item.quantity > 0)
+      set({
+        items: get().items.map((i) =>
+          i.id === id &&
+          areCustomizationsEqual(i.customizations, customizations)
+            ? { ...i, quantity: i.quantity - 1 }
+            : i,
+        ),
+      });
   },
 
   clearCart: () => {

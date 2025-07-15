@@ -1,7 +1,9 @@
-import { images } from "@/contants";
+import { images } from "@/constants";
 import { useCartStore } from "@/store/cart.store";
 import { CartItemType } from "@/type";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import BouncyCheckBox from "react-native-bouncy-checkbox";
+import QuantityControl from "./QuantityControl";
 
 function CartItem({ item }: { item: CartItemType }) {
   const { increaseQty, decreaseQty, removeItem } = useCartStore();
@@ -12,6 +14,9 @@ function CartItem({ item }: { item: CartItemType }) {
       style={{ elevation: 5, shadowColor: "#878787" }}
     >
       <View className="flex flex-row items-center gap-x-3">
+        <View className="my-auto -ml-1 -mr-5">
+          <BouncyCheckBox />
+        </View>
         <View className="cart-item__image">
           <Image
             source={{ uri: item.image_url }}
@@ -25,39 +30,17 @@ function CartItem({ item }: { item: CartItemType }) {
             Rs. {item.price}
           </Text>
 
-          <View className="flex flex-row items-center gap-x-4 mt-2">
-            <TouchableOpacity
-              onPress={() => decreaseQty(item.id, item.customizations!)}
-              className="cart-item__actions"
-            >
-              <Image
-                source={images.minus}
-                className="size-1/2"
-                resizeMode="contain"
-                tintColor="#FF9C01"
-              />
-            </TouchableOpacity>
-
-            <Text className="base-bold text-dark-100">{item.quantity}</Text>
-
-            <TouchableOpacity
-              onPress={() => increaseQty(item.id, item.customizations!)}
-              className="cart-item__actions"
-            >
-              <Image
-                source={images.plus}
-                className="size-1/2"
-                resizeMode="contain"
-                tintColor="#FF9C01"
-              />
-            </TouchableOpacity>
-          </View>
+          <QuantityControl
+            item={item}
+            onDecrease={() => decreaseQty(item.id, item.customizations!)}
+            onIncrease={() => increaseQty(item.id, item.customizations!)}
+          />
         </View>
       </View>
 
       <TouchableOpacity
         onPress={() => removeItem(item.id, item.customizations!)}
-        className="flex-center"
+        className="flex-center absolute bottom-5 right-5"
       >
         <Image source={images.trash} className="size-5" resizeMode="contain" />
       </TouchableOpacity>

@@ -1,6 +1,7 @@
+import { ImageSourcePropType } from "react-native";
 import { Models } from "react-native-appwrite";
 
-export interface MenuItem extends Models.Document {
+interface MenuItem extends Models.Document {
   name: string;
   price: number;
   image_url: string;
@@ -9,9 +10,15 @@ export interface MenuItem extends Models.Document {
   protein: number;
   rating: number;
   type: string;
+  categories: Category;
 }
 
-export interface Category extends Models.Document {
+interface MenuWithCustomizations extends Models.Document {
+  menu: MenuItem;
+  customizations: CartCustomization[];
+}
+
+interface Category extends Models.Document {
   name: string;
   description: string;
 }
@@ -22,14 +29,15 @@ export interface User extends Models.Document {
   avatar: string;
 }
 
-export interface CartCustomization {
+interface CartCustomization {
   id: string;
   name: string;
   price: number;
   type: string;
+  image_url: string;
 }
 
-export interface CartItemType {
+interface CartItemType {
   id: string; // menu item id
   name: string;
   price: number;
@@ -38,9 +46,9 @@ export interface CartItemType {
   customizations?: CartCustomization[];
 }
 
-export interface CartStore {
+interface CartStore {
   items: CartItem[];
-  addItem: (item: Omit<CartItem, "quantity">) => void;
+  addItem: (item: CartItemType & { quantity?: number }) => void;
   removeItem: (id: string, customizations: CartCustomization[]) => void;
   increaseQty: (id: string, customizations: CartCustomization[]) => void;
   decreaseQty: (id: string, customizations: CartCustomization[]) => void;
@@ -73,6 +81,7 @@ interface CustomButtonProps {
 
 interface CustomHeaderProps {
   title?: string;
+  secondRow?: React.ReactNode;
 }
 
 interface CustomInputProps {
@@ -104,4 +113,19 @@ interface SignInParams {
 interface GetMenuParams {
   category: string;
   query: string;
+}
+
+interface EmptyComponentProps {
+  title: string;
+  subtitle: string;
+}
+
+interface TitleSubtitleProps {
+  title: string;
+  subtitle: string | number;
+}
+
+interface IconWithTextProps {
+  iconPath: ImageSourcePropType;
+  text: string;
 }
