@@ -5,8 +5,8 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 function ToppingCard({ item }: { item: CartCustomization }) {
   return (
     <View
-      className="rounded-2xl bg-[#392D2D] min-w-24 w-fit"
-      style={{ boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)" }}
+      className="rounded-2xl bg-[#392D2D] w-28"
+      style={{ boxShadow: "0px 4px 4px #8787874c" }}
     >
       <View className="bg-white rounded-2xl flex-center">
         <Image
@@ -16,8 +16,10 @@ function ToppingCard({ item }: { item: CartCustomization }) {
         />
       </View>
 
-      <View className="flex-between flex-row gap-x-2 p-2">
-        <Text className="text-white-100">{item.name}</Text>
+      <View className="flex-between flex-row gap-x-2 px-2 py-4 w-full overflow-hidden">
+        <Text className="text-white-100" numberOfLines={1}>
+          {item.name}
+        </Text>
         <TouchableOpacity
           className="rounded-full p-1 bg-error"
           onPress={() => console.log("Onion pressed")}

@@ -37,6 +37,10 @@ interface CartCustomization {
   image_url: string;
 }
 
+interface MenuCustomization extends Models.Document {
+  customizations: CartCustomization;
+}
+
 interface CartItemType {
   id: string; // menu item id
   name: string;
@@ -128,4 +132,10 @@ interface TitleSubtitleProps {
 interface IconWithTextProps {
   iconPath: ImageSourcePropType;
   text: string;
+}
+
+interface ToppingListProps {
+  title: string;
+  items: MenuCustomization[];
+  emptyText: string;
 }

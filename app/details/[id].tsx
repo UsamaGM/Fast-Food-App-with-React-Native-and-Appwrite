@@ -2,15 +2,15 @@ import CustomHeader from "@/components/CustomHeader";
 import QuantityControl from "@/components/QuantityControl";
 import ToppingCard from "@/components/ToppingCard";
 import { images } from "@/constants";
-import { getMenuCustomizations, getMenuItem } from "@/lib/appwrite";
+import { getMenuItem } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import { useCartStore } from "@/store/cart.store";
 import {
   CartCustomization,
   IconWithTextProps,
-  MenuItem,
-  MenuWithCustomizations,
+  MenuCustomization,
   TitleSubtitleProps,
+  ToppingListProps,
 } from "@/type";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
@@ -72,6 +72,28 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
+function ToppingList({ title, items, emptyText }: ToppingListProps) {
+  return (
+    <View className="mb-6">
+      <Text className="h3-bold mb-2">{title}</Text>
+      <FlatList
+        horizontal
+        data={items}
+        renderItem={({ item }) => (
+          <ToppingCard item={item.customizations as CartCustomization} />
+        )}
+        ListEmptyComponent={() => (
+          <View>
+            <Text>{emptyText}</Text>
+          </View>
+        )}
+        contentContainerClassName="gap-x-3 py-2"
+        showsHorizontalScrollIndicator={false}
+      />
+    </View>
+  );
+}
+
 function MenuItemDetails() {
   const { id } = useLocalSearchParams();
 
@@ -81,7 +103,7 @@ function MenuItemDetails() {
     fn: getMenuItem,
     params: { id: id as string },
   });
-  console.log(JSON.stringify(data, null, 2));
+
   const { addItem } = useCartStore();
 
   if (loading) return <ActivityIndicator />;
@@ -92,7 +114,12 @@ function MenuItemDetails() {
       </View>
     );
 
-  const menuCustomizations = data?.menuCustomizations;
+  const menuCustomizations = data?.menuCustomizations as MenuCustomization[];
+  const toppings: MenuCustomization[] = [];
+  const sidings: MenuCustomization[] = [];
+  menuCustomizations.forEach((c) =>
+    c.customizations.type === "topping" ? toppings.push(c) : sidings.push(c),
+  );
 
   function handleDecrease() {
     if (quantity > 0) setQuantity((prev) => prev - 1);
@@ -156,41 +183,17 @@ function MenuItemDetails() {
           {data.description}
         </Text>
 
-        <View className="mb-6">
-          <Text className="h3-bold mb-2">Toppings</Text>
-          <FlatList
-            horizontal
-            data={menuCustomizations}
-            renderItem={({ item }) => (
-              <ToppingCard item={item.customizations as CartCustomization} />
-            )}
-            ListEmptyComponent={() => (
-              <View>
-                <Text>No Toppings for this item</Text>
-              </View>
-            )}
-            contentContainerClassName="gap-x-3 py-2"
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
+        <ToppingList
+          title="Toppings"
+          items={toppings}
+          emptyText="No Toppings for this item"
+        />
 
-        <View className="mb-6">
-          <Text className="h3-bold mb-2">Side Options</Text>
-          <FlatList
-            horizontal
-            data={data.sideOptions}
-            renderItem={({ item }) => (
-              <View>
-                <Text>{item.name}</Text>
-              </View>
-            )}
-            ListEmptyComponent={() => (
-              <View>
-                <Text>No Side Options for this item</Text>
-              </View>
-            )}
-          />
-        </View>
+        <ToppingList
+          title="Side Options"
+          items={sidings}
+          emptyText="No Side Options for this item"
+        />
       </ScrollView>
 
       <View className="w-full px-5 h-[10%]">
