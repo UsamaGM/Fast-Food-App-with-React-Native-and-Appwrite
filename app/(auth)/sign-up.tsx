@@ -1,6 +1,6 @@
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
-import { createUser } from "@/lib/appwrite";
+import { createUser } from "@/lib/auth.appwrite";
 import * as Sentry from "@sentry/react-native";
 import { Link, router } from "expo-router";
 import { useState } from "react";
@@ -19,7 +19,6 @@ function SignUp() {
     setIsSubmitting(true);
 
     try {
-      console.log(form);
       await createUser(form);
 
       router.replace("/sign-in");

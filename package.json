@@ -16,6 +16,7 @@
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
     "@sentry/react-native": "^6.17.0",
+    "@stripe/stripe-react-native": "^0.50.0",
     "clsx": "^2.1.1",
     "expo": "~53.0.17",
     "expo-blur": "~14.1.5",
@@ -43,6 +44,7 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
+    "stripe": "^18.3.0",
     "zustand": "^5.0.6"
   },
   "devDependencies": {

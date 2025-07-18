@@ -1,4 +1,5 @@
 import { images } from "@/constants";
+import useAuthStore from "@/store/auth.store";
 import { Redirect, Slot } from "expo-router";
 import {
   Dimensions,
@@ -10,7 +11,6 @@ import {
   StatusBar,
   View,
 } from "react-native";
-import useAuthStore from "@/store/auth.store";
 
 function AuthLayout() {
   const { isAuthenticated } = useAuthStore();
@@ -21,7 +21,11 @@ function AuthLayout() {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <StatusBar barStyle="dark-content" hidden />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="#0000003F"
+        translucent
+      />
       <ScrollView
         className="bg-white h-full"
         keyboardShouldPersistTaps="handled"

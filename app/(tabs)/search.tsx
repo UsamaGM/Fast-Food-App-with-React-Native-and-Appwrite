@@ -3,7 +3,7 @@ import EmptyComponent from "@/components/EmptyComponent";
 import Filter from "@/components/Filter";
 import MenuCard from "@/components/MenuCard";
 import SearchBar from "@/components/SearchBar";
-import { getCategories, getMenu } from "@/lib/appwrite";
+import { getCategories, getMenu } from "@/lib/data.appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import { Category, MenuItem } from "@/type";
 import cn from "clsx";

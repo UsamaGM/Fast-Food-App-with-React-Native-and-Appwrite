@@ -2,7 +2,6 @@ import { images } from "@/constants";
 import { CustomHeaderProps } from "@/type";
 import { useRouter } from "expo-router";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import CustomOutlinedButton from "./CustomOutlinedButton";
 
 function CustomHeader({ title, secondRow }: CustomHeaderProps) {
   const router = useRouter();

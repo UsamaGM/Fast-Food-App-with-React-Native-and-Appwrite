@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { User } from "@/type";
-import { getCurrentUser } from "@/lib/appwrite";
-// import * as Sentry from "@sentry/core";
+import { getCurrentUser } from "@/lib/auth.appwrite";
+import * as Sentry from "@sentry/core";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -34,8 +34,7 @@ const useAuthStore = create<AuthState>((set) => ({
         set({ isAuthenticated: false, user: null });
       }
     } catch (e: any) {
-      console.log("fetchAuthenticatedUser error", e);
-      // Sentry.captureException(e);
+      Sentry.captureException(e);
       set({ isAuthenticated: false, user: null });
     } finally {
       set({ isLoading: false });

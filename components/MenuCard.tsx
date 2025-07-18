@@ -42,6 +42,7 @@ function MenuCard({
             price,
             image_url: imageUrl,
             customizations: [],
+            quantity: 1,
           })
         }
       >

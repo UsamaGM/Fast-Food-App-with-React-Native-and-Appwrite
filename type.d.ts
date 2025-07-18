@@ -1,6 +1,63 @@
 import { ImageSourcePropType } from "react-native";
 import { Models } from "react-native-appwrite";
 
+// Auth Types Start
+interface CreateUserParams {
+  email: string;
+  password: string;
+  name: string;
+}
+
+interface SignInParams {
+  email: string;
+  password: string;
+}
+
+interface UpdateEmailParams {
+  newEmail: string;
+  prevEmail: string;
+  password: string;
+  userId: string;
+}
+
+interface UpdateNameParams {
+  newName: string;
+  prevName: string;
+  userId: string;
+}
+
+interface UpdatePasswordParams {
+  newPassword: string;
+  oldPassword: string;
+}
+
+type Theme = "light" | "dark" | "system";
+interface UpdatePrefsParams {
+  theme: Theme;
+}
+
+interface ProfileEditFieldProps {
+  label: string;
+  value: string;
+  iconPath: any;
+  placeholder?: string;
+  keyboardType?: "default" | "email-address" | "numeric" | "phone-pad";
+  onChangeText: (text: string) => void;
+  fieldKey: ProfileOptions;
+  editing: ProfileOptions;
+  onEdit: (field: ProfileOptions) => void;
+  onSave?: () => void;
+}
+
+type ProfileOptions =
+  | "email"
+  | "phone"
+  | "address"
+  | "password"
+  | "name"
+  | null;
+// Auth Types End
+
 interface MenuItem extends Models.Document {
   name: string;
   price: number;
@@ -103,17 +160,6 @@ interface ProfileFieldProps {
   icon: ImageSourcePropType;
 }
 
-interface CreateUserParams {
-  email: string;
-  password: string;
-  name: string;
-}
-
-interface SignInParams {
-  email: string;
-  password: string;
-}
-
 interface GetMenuParams {
   category: string;
   query: string;
@@ -138,4 +184,10 @@ interface ToppingListProps {
   title: string;
   items: MenuCustomization[];
   emptyText: string;
+}
+
+interface ProfileDetailRowProps {
+  label: string;
+  value: string | undefined;
+  iconPath: any;
 }

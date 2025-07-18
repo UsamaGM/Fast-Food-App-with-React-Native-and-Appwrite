@@ -30,6 +30,7 @@ function TabsLayout() {
   const { isAuthenticated } = useAuthStore();
 
   if (!isAuthenticated) return <Redirect href="/sign-in" />;
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="white" />

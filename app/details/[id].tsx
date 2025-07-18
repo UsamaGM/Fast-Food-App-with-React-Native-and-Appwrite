@@ -2,7 +2,7 @@ import CustomHeader from "@/components/CustomHeader";
 import QuantityControl from "@/components/QuantityControl";
 import ToppingCard from "@/components/ToppingCard";
 import { images } from "@/constants";
-import { getMenuItem } from "@/lib/appwrite";
+import { getMenuItem } from "@/lib/data.appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import { useCartStore } from "@/store/cart.store";
 import {
